@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Atendimento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto 20px auto;
+            width: 200px;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #ccc;
+        }
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+        button.copy-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="/mnt/data/5c4258ea-7f2e-47d0-b0e1-817a0c4a59e1.png" alt="Vero Logo" class="logo">
+
+    <h1>Formulário de Atendimento</h1>
+    
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'Lentidao')" id="defaultOpen">Lentidão/Oscilação</button>
+        <button class="tablinks" onclick="openTab(event, 'SemConexao')">Sem Conexão</button>
+    </div>
+
+    <div id="Lentidao" class="tabcontent">
+        <label for="signal">Sinal óptico:</label>
+        <textarea id="signal" rows="2"></textarea>
+        
+        <label for="problems">Onde cliente enfrenta problemas: Exemplo: Celular, Tv...</label>
+        <textarea id="problems" rows="2"></textarea>
+        
+        <label for="connection">Conectado via wi-fi ou via cabo?</label>
+        <textarea id="connection" rows="2"></textarea>
+        
+        <label for="localCheck">O que deve ser verificado no local:</label>
+        <textarea id="localCheck" rows="4"></textarea>
+        
+        <label for="phoneLentidao">Telefone:</label>
+        <input type="text" id="phoneLentidao">
+        
+        <label for="addressLentidao">Endereço:</label>
+        <textarea id="addressLentidao" rows="2"></textarea>
+        
+        <label for="availabilityLentidao">Disponibilidade: (dia/turno)</label>
+        <input type="text" id="availabilityLentidao">
+
+        <button class="copy-btn" onclick="copyToClipboard('Lentidao')">Copiar Conteúdo</button>
+    </div>
+
+    <div id="SemConexao" class="tabcontent">
+        <label for="los">LOS NO LOCAL (SIM/NÃO)</label>
+        <input type="text" id="los">
+        
+        <label for="pon">PON PISCANDO (SIM/NÃO)</label>
+        <input type="text" id="pon">
+        
+        <label for="route">ROTA DA CONEXÃO (OLT/SLOT/PON)</label>
+        <input type="text" id="route">
+        
+        <label for="massive">MASSIVA? (SIM/NÃO)</label>
+        <input type="text" id="massive">
+        
+        <label for="phoneSemConexao">Telefone:</label>
+        <input type="text" id="phoneSemConexao">
+        
+        <label for="addressSemConexao">Endereço:</label>
+        <textarea id="addressSemConexao" rows="2"></textarea>
+        
+        <label for="availabilitySemConexao">Disponibilidade: (dia/turno)</label>
+        <input type="text" id="availabilitySemConexao">
+
+        <button class="copy-btn" onclick="copyToClipboard('SemConexao')">Copiar Conteúdo</button>
+    </div>
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        document.getElementById("defaultOpen").click();
+
+        function copyToClipboard(tabName) {
+            let content = '';
+
+            if (tabName === 'Lentidao') {
+                const signal = document.getElementById('signal').value;
+                const problems = document.getElementById('problems').value;
+                const connection = document.getElementById('connection').value;
+                const localCheck = document.getElementById('localCheck').value;
+                const phone = document.getElementById('phoneLentidao').value;
+                const address = document.getElementById('addressLentidao').value;
+                const availability = document.getElementById('availabilityLentidao').value;
+                
+                content = `Casos de lentidão/oscilação\n\nSinal óptico:\n${signal}\n\nOnde cliente enfrenta problemas: Exemplo: Celular, Tv...\n${problems}\n\nConectado via wi-fi ou via cabo?\n${connection}\n\nO que deve ser verificado no local:\n${localCheck}\n\nTelefone:\n${phone}\n\nEndereço:\n${address}\n\nDisponibilidade: (dia/turno)\n${availability}`;
+            } else if (tabName === 'SemConexao') {
+                const los = document.getElementById('los').value;
+                const pon = document.getElementById('pon').value;
+                const route = document.getElementById('route').value;
+                const massive = document.getElementById('massive').value;
+                const phone = document.getElementById('phoneSemConexao').value;
+                const address = document.getElementById('addressSemConexao').value;
+                const availability = document.getElementById('availabilitySemConexao').value;
+                
+                content = `Sem Conexão\n\nLOS NO LOCAL (SIM/NÃO):\n${los}\n\nPON PISCANDO (SIM/NÃO):\n${pon}\n\nROTA DA CONEXÃO (OLT/SLOT/PON):\n${route}\n\nMASSIVA? (SIM/NÃO):\n${massive}\n\nTelefone:\n${phone}\n\nEndereço:\n${address}\n\nDisponibilidade: (dia/turno)\n${availability}`;
+            }
+            
+            navigator.clipboard.writeText(content).then(() => {
+                alert('Conteúdo copiado para a área de transferência!');
+            }).catch(err => {
+                alert('Erro ao copiar o conteúdo: ' + err);
+            });
+        }
+    </script>
+
+</body>
+</html>
